@@ -13,7 +13,8 @@ import dataset
 from model import Model
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-n', '--name', help="name of model")
+parser.add_argument('-n', '--name', default="try_lr0.000500_recurrent3_lambda15.000000_lambda21.000000_withoutROI",
+                    help="name of model")
 parser.add_argument('-dr', '--root', default='/content/drive/MyDrive/DatasetCleanBBC', help="data root")
 parser.add_argument('-d', '--dataset', help='clean_bbc')
 parser.add_argument('-r', '--recurrent', type=int, default=3, help='num recurrent')
