@@ -100,14 +100,7 @@ class Model(nn.Module):
         else:
             mask_perc_loss = None
 
-        if self.use_gan:
-            fake_pose_input = torch.cat([pose_imgs, final_pred], 1).detach()
-            fake_img_input = torch.cat([src_imgs, final_pred], 1).detach()
-            gan_loss = self.lambda3 * (self.crit_gan(self.net_d_pose(fake_pose_input), True) +
-                                       self.crit_gan(self.net_d_img(fake_img_input), True))
-            g_loss = g_loss + gan_loss
-        else:
-            gan_loss = None
+        gan_loss = None
 
         g_loss.backward()
         self.optim.step()
@@ -144,10 +137,7 @@ class Model(nn.Module):
 
         l1_loss, perc_loss, mask_perc_loss, gan_loss = self.backward_g(pred, input, target_imgs, roi_bbox)
 
-        if self.use_gan:
-            d_loss = self.backward_d(pred, input, target_imgs)
-        else:
-            d_loss = None
+        d_loss = None
 
         return pred, l1_loss, perc_loss, mask_perc_loss, gan_loss, d_loss
 
