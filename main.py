@@ -146,9 +146,9 @@ for epoch in range(start_e, start_e + 20):
         ssim = []
         src_imgs = human_imgs + background_imgs
 
-        pred, l1_loss, perc_loss, mask_perc_loss, gan_loss, d_loss = model.optimize(pose_imgs, human_imgs,
-                                                                                    background_imgs, masks,
-                                                                                    target_imgs, roi_bbox)
+        pred, recons_loss, perc_loss, mask_perc_loss, gan_loss, d_loss = model.optimize(pose_imgs, human_imgs,
+                                                                                        background_imgs, masks,
+                                                                                        target_imgs, roi_bbox)
 
         if iter % 500 == 0:
             log = 'Epoch %d Iter %d ReconsLoss %.4f perceptual loss %.4f' % (
