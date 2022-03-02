@@ -15,7 +15,7 @@ from model import Model
 parser = argparse.ArgumentParser()
 parser.add_argument('-n', '--name', help="name of model")
 parser.add_argument('-dr', '--root', default='/content/drive/MyDrive/DatasetCleanBBC', help="data root")
-parser.add_argument('-d', '--dataset', help='dataset name')
+parser.add_argument('-d', '--dataset', help='clean_bbc')
 parser.add_argument('-r', '--recurrent', type=int, default=3, help='num recurrent')
 parser.add_argument('-nl', '--non_local', action='store_true', help='non local')
 parser.add_argument('-dp', '--dual_path', action='store_true', help='dual path')
@@ -75,8 +75,9 @@ if not os.path.isdir(result_root):
     os.makedirs(result_root, exist_ok=True)
 file_dict = dict()
 for j, (
-pose_imgs, target_imgs, human_imgs, background_imgs, masks, target_masks, roi_bbox, src_name, target_name) in enumerate(
-        test_loader):
+        pose_imgs, target_imgs, human_imgs, background_imgs, masks, target_masks, roi_bbox, src_name,
+        target_name) in enumerate(
+    test_loader):
     print(j)
     if torch.cuda.is_available():
         pose_imgs = Variable(pose_imgs).cuda()
