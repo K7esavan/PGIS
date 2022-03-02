@@ -27,9 +27,9 @@ class PoseEncoder(nn.Module):
         return output[-1], [output[5], output[3], output[0]], [output[5], output[3], output[1]]
 
 
-class ForeGroundEncoder(nn.Module):
+class ForegroundEncoder(nn.Module):
     def __init__(self, in_channels):
-        super(ForeGroundEncoder, self).__init__()
+        super(ForegroundEncoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 32, "down")
         self.conv2 = conv5x5(32 * 2, 32)
         self.conv3 = conv5x5(32, 64, "down")
