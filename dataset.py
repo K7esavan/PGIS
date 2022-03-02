@@ -2,11 +2,11 @@ import json
 import os
 import pickle
 
+import PIL
 import imageio
 import numpy as np
 import torch
 import torchvision
-from PIL.Image import Image
 
 
 class CleanBCC(torch.utils.data.Dataset):
@@ -65,7 +65,7 @@ class CleanBCC(torch.utils.data.Dataset):
         target_mask = np.zeros([1, target_mask.shape[0], target_mask.shape[1]])
         target_mask[:, left_x:right_x + 1, left_y:right_y + 1] = 1
         target_mask = torch.FloatTensor(target_mask)
-        src_img_mat = self.transforms(Image.open(source_image_path))
+        src_img_mat = self.transforms(PIL.Image.open(source_image_path))
         human_img = src_img_mat * mask
         background_img = src_img_mat * (1 - mask)
 
@@ -80,9 +80,9 @@ class CleanBCC(torch.utils.data.Dataset):
         max_x = torch.max(masked_idx[:, 0]).item()
         max_y = torch.max(masked_idx[:, 1]).item()
         roi_bbox = torch.FloatTensor([min_x, min_y, max_x, max_y])
-        target_img = self.transforms(Image.open(target_image_path))
+        target_img = self.transforms(PIL.Image.open(target_image_path))
         pose_img = kp_to_map((target_img.shape[2], target_img.shape[1]), target_pose)
-        
+
         if self.mode == 'train':
             return pose_img, target_img, human_img, background_img, mask, target_mask, roi_bbox
         else:
@@ -148,10 +148,10 @@ class Market1501(torch.utils.data.Dataset):
         target_mask = np.zeros([1, target_mask.shape[0], target_mask.shape[1]])
         target_mask[:, left_x:right_x + 1, left_y:right_y + 1] = 1
         target_mask = torch.FloatTensor(target_mask)
-        src_img_mat = self.transforms(Image.open(source_image_path))
+        src_img_mat = self.transforms(PIL.Image.open(source_image_path))
         human_img = src_img_mat * mask
         background_img = src_img_mat * (1 - mask)
-        src_img = self.transforms(Image.open(source_image_path))
+        src_img = self.transforms(PIL.Image.open(source_image_path))
         masked_idx = (target_mask[0, :, :] != 0).nonzero()
         try:
             min_x = torch.min(masked_idx[:, 0]).item()
@@ -162,7 +162,7 @@ class Market1501(torch.utils.data.Dataset):
         max_x = torch.max(masked_idx[:, 0]).item()
         max_y = torch.max(masked_idx[:, 1]).item()
         roi_bbox = torch.FloatTensor([min_x, min_y, max_x, max_y])
-        target_img = self.transforms(Image.open(target_image_path))
+        target_img = self.transforms(PIL.Image.open(target_image_path))
         pose_img = kp_to_map((target_img.shape[2], target_img.shape[1]), target_pose)
         if self.mode == 'train':
             return pose_img, target_img, human_img, background_img, mask, target_mask, roi_bbox
@@ -234,10 +234,10 @@ class PennAction(torch.utils.data.Dataset):
         target_mask = np.zeros([1, target_mask.shape[0], target_mask.shape[1]])
         target_mask[:, left_x:right_x + 1, left_y:right_y + 1] = 1
         target_mask = torch.FloatTensor(target_mask)
-        src_img_mat = self.transforms(Image.open(source_image_path))
+        src_img_mat = self.transforms(PIL.Image.open(source_image_path))
         human_img = src_img_mat * mask
         background_img = src_img_mat * (1 - mask)
-        src_img = self.transforms(Image.open(source_image_path))
+        src_img = self.transforms(PIL.Image.open(source_image_path))
         masked_idx = (target_mask[0, :, :] != 0).nonzero()
         try:
             min_x = torch.min(masked_idx[:, 0]).item()
@@ -248,7 +248,7 @@ class PennAction(torch.utils.data.Dataset):
         max_x = torch.max(masked_idx[:, 0]).item()
         max_y = torch.max(masked_idx[:, 1]).item()
         roi_bbox = torch.FloatTensor([min_x, min_y, max_x, max_y])
-        target_img = self.transforms(Image.open(target_image_path))
+        target_img = self.transforms(PIL.Image.open(target_image_path))
         pose_img = kp_to_map((target_img.shape[2], target_img.shape[1]), target_pose)
         if self.mode == 'train':
             return pose_img, target_img, human_img, background_img, mask, target_mask, roi_bbox

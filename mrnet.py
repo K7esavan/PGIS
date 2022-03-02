@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 
-class PoseEncoder(nn.module):
+class PoseEncoder(nn.Module):
     def __init__(self, in_channels):
         super(PoseEncoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 32, "down")
@@ -27,9 +27,9 @@ class PoseEncoder(nn.module):
         return output[-1], [output[5], output[3], output[0]], [output[5], output[3], output[1]]
 
 
-class ForegroundEncoder(nn.module):
+class ForegroundEncoder(nn.Module):
     def __init__(self, in_channels):
-        super(PoseEncoder, self).__init__()
+        super(ForegroundEncoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 32, "down")
         self.conv2 = conv5x5(32, 32)
         self.conv3 = conv5x5(32, 64, "down")
@@ -52,7 +52,7 @@ class ForegroundEncoder(nn.module):
         return output[-1], [output[5], output[3], output[0]], [output[5], output[3], output[1]]
 
 
-class BackgroundEncoder(nn.module):
+class BackgroundEncoder(nn.Module):
     def __init__(self, in_channels, input_size, dataset='market1501'):
         super(BackgroundEncoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 32)
@@ -85,7 +85,7 @@ class BackgroundEncoder(nn.module):
         return output
 
 
-class Decoder(nn.module):
+class Decoder(nn.Module):
     def __init__(self, in_channels, out_channels, use_nonlocal=True):
         super(Decoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 128, 'up')

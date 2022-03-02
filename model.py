@@ -6,7 +6,7 @@ import mrnet
 import vgg
 
 
-class Model(nn.module):
+class Model(nn.Module):
     def __init__(self, pose_channels=3, img_channels=3, input_size=128,
                  recurrent=1, use_nonlocal=True, dataset=None, lr=2e-4,
                  lambda1=0.5, lambda2=0.05, lambda3=0.5, mapping=None, roi_size=None):
