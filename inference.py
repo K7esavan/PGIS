@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-n', '--name', default="try_lr0.000500_recurrent3_lambda15.000000_lambda21.000000_withoutROI",
                     help="name of model")
 parser.add_argument('-dr', '--root', default='/content/drive/MyDrive/DatasetCleanBBC', help="data root")
-parser.add_argument('-d', '--dataset', help='clean_bbc')
+parser.add_argument('-d', '--dataset', default='clean_bbc', help="dataset name")
 parser.add_argument('-r', '--recurrent', type=int, default=3, help='num recurrent')
 parser.add_argument('-nl', '--non_local', action='store_true', help='non local')
 parser.add_argument('-dp', '--dual_path', action='store_true', help='dual path')
