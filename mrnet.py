@@ -27,29 +27,29 @@ class PoseEncoder(nn.Module):
         return output[-1], [output[5], output[3], output[0]], [output[5], output[3], output[1]]
 
 
-class ForegroundEncoder(nn.Module):
+class ForeGroundEncoder(nn.Module):
     def __init__(self, in_channels):
-        super(ForegroundEncoder, self).__init__()
+        super(ForeGroundEncoder, self).__init__()
         self.conv1 = conv5x5(in_channels, 32, "down")
-        self.conv2 = conv5x5(32, 32)
+        self.conv2 = conv5x5(32 * 2, 32)
         self.conv3 = conv5x5(32, 64, "down")
         self.conv4 = conv5x5(64, 64)
-        self.conv5 = conv5x5(64, 128, "down")
+        self.conv5 = conv5x5(64 * 2, 128, "down")
         self.conv6 = conv5x5(128, 128)
-        self.conv7 = conv5x5(128, 256, "down")
+        self.conv7 = conv5x5(128 * 2, 256, "down")
         self.conv8 = conv5x5(256, 256)
 
-    def forward(self, input):
+    def forward(self, input, lateral):
         output = []
         output.append(self.conv1(input))
-        output.append(self.conv2(output[-1]))
+        output.append(self.conv2(torch.cat([output[-1], lateral[-1]], 1)))
         output.append(self.conv3(output[-1]))
         output.append(self.conv4(output[-1]))
-        output.append(self.conv5(output[-1]))
+        output.append(self.conv5(torch.cat([output[-1], lateral[-2]], 1)))
         output.append(self.conv6(output[-1]))
-        output.append(self.conv7(output[-1]))
+        output.append(self.conv7(torch.cat([output[-1], lateral[-3]], 1)))
         output.append(self.conv8(output[-1]))
-        return output[-1], [output[5], output[3], output[0]], [output[5], output[3], output[1]]
+        return output[-1], [output[5], output[3], output[1]]
 
 
 class BackgroundEncoder(nn.Module):
